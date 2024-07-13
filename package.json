@@ -1,0 +1,26 @@
+{
+  "name": "multilang-backend",
+  "version": "1.0.0",
+  "description": "MultiLang",
+  "main": "app.js",
+  "scripts": {
+    "start": "node --env-file=.env src/app.js",
+    "debug": "nodemon --inspect --env-file=.env src/app.js",
+    "docs": "apidoc -i src/ -o docs"
+  },
+  "author": "galaa.purev@outlook.com",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "nodemon": "^3.1.4",
+    "pg": "^8.12.0",
+    "pg-hstore": "^2.3.4",
+    "rate-limiter-flexible": "^5.0.3",
+    "sequelize": "^6.37.3",
+    "winston": "^3.13.1"
+  }
+}
