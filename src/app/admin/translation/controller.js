@@ -35,6 +35,12 @@ exports.select = async (req, res, next) => {
 exports.insert = async (req, res, next) => {
   const data = req.body;
   try {
+    const isExistKey = await Translation.findOne({
+      where: { key: data.key, lang_id: data.lang_id },
+    });
+    if (isExistKey) {
+      throw new ErrorHandler(500, 'Translation key is existed');
+    }
     const d = await Translation.create(data);
     res.success(d);
   } catch (err) {
