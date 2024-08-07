@@ -52,16 +52,21 @@ export class Translation {
 
   @BeforeInsert()
   async generateTranslationId() {
-    const latest = await AppDataSource.getRepository(Translation).find({
-      order: { translation_id: 'DESC' },
-      take: 1,
-    });
+    const latest = await AppDataSource.getRepository(Translation)
+      .createQueryBuilder('t')
+      .select('t.translation_id')
+      .orderBy(
+        "CAST(SUBSTRING(t.translation_id FROM '[0-9]+') AS INTEGER)",
+        'DESC'
+      )
+      .limit(1)
+      .getOne();
 
-    if (latest.length === 0) {
-      this.translation_id = 'S_1';
-    } else {
-      const latestId = parseInt(latest[0].translation_id.split('_')[1], 10);
+    if (latest) {
+      const latestId = parseInt(latest.translation_id.split('_')[1], 10);
       this.translation_id = `S_${latestId + 1}`;
+    } else {
+      this.translation_id = 'S_1';
     }
   }
 }
